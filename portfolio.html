@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio — Tesla Prime Investment</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+  @theme {
+    --color-canvas: #0d0e10;
+    --color-surface: #16181c;
+    --color-line: #2a2d33;
+    --color-ink: #f2f3f5;
+    --color-muted: #9097a1;
+    --color-accent: #3e6ae1;
+    --color-gain: #3ddc97;
+    --color-loss: #ff5a5f;
+    --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+</style>
+</head>
+<body class="bg-canvas text-ink font-sans antialiased min-h-screen flex flex-col">
+  <div id="sample-banner" class="bg-surface border-b border-line px-6 py-2.5 text-center text-xs text-muted">Sample data: the figures on this site are placeholders, not real holdings or funds.</div>
+
+  <header class="sticky top-0 z-40 bg-canvas/80 backdrop-blur border-b border-line">
+    <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between text-sm">
+      <a href="index.html" class="font-medium tracking-tight text-ink hover:text-white transition-colors duration-200">Tesla Prime Investment</a>
+      <nav class="flex items-center space-x-6 text-sm">
+        <a href="index.html" class="text-muted hover:text-ink transition-colors duration-200">Home</a>
+        <a href="portfolio.html" class="text-ink font-medium" aria-current="page">Portfolio</a>
+        <a href="deposit.html" class="text-muted hover:text-ink transition-colors duration-200">Deposit</a>
+        <a href="withdraw.html" class="text-muted hover:text-ink transition-colors duration-200">Withdraw</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1 py-12 md:py-16">
+    <div class="max-w-6xl mx-auto px-6 space-y-16">
+      <!-- Portfolio Overview -->
+      <section>
+        <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-6">
+          <h1 class="text-3xl font-light tracking-tight text-ink">Portfolio</h1>
+          <p id="portfolio-as-of" class="text-xs text-muted tabular-nums" aria-live="polite"></p>
+        </div>
+
+        <div id="summary-container" class="space-y-6">
+          <div id="summary-content">
+            <div class="mb-6">
+              <span class="text-xs text-muted block mb-1">Total balance</span>
+              <div id="portfolio-balance" class="text-5xl md:text-6xl font-light tracking-tight text-ink tabular-nums">—</div>
+            </div>
+
+            <div class="flex flex-wrap gap-8 text-sm mb-8">
+              <div>
+                <span class="text-muted">Invested</span>
+                <span id="portfolio-invested" class="ml-2 text-ink tabular-nums font-medium">—</span>
+              </div>
+              <div>
+                <span class="text-muted">Available to withdraw</span>
+                <span id="portfolio-available" class="ml-2 text-ink tabular-nums font-medium">—</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <a href="deposit.html" class="inline-flex items-center justify-center h-10 px-5 text-sm font-medium rounded bg-accent text-white hover:bg-accent/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-200">Deposit</a>
+              <a href="withdraw.html" class="inline-flex items-center justify-center h-10 px-5 text-sm font-medium rounded border border-line text-ink hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-line transition-colors duration-200">Withdraw</a>
+            </div>
+          </div>
+          <div id="summary-feedback" class="hidden"></div>
+        </div>
+      </section>
+
+      <!-- Holdings Section -->
+      <section>
+        <h2 class="text-xl font-light tracking-tight text-ink mb-6">Holdings</h2>
+        <div id="holdings-feedback" class="hidden"></div>
+        <div id="holdings-wrapper" class="overflow-x-auto">
+          <table id="holdings-table" class="w-full text-sm text-left">
+            <thead class="hidden sm:table-header-group border-b border-line text-xs text-muted">
+              <tr>
+                <th scope="col" class="py-3 pr-4 font-normal">Name</th>
+                <th scope="col" class="py-3 px-4 font-normal text-right">Quantity</th>
+                <th scope="col" class="py-3 px-4 font-normal text-right">Value</th>
+                <th scope="col" class="py-3 pl-4 font-normal text-right">Gain / Loss</th>
+              </tr>
+            </thead>
+            <tbody id="holdings-tbody" class="divide-y divide-line"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Transactions Section -->
+      <section>
+        <h2 class="text-xl font-light tracking-tight text-ink mb-6">Transactions</h2>
+        <div id="transactions-feedback" class="hidden"></div>
+        <ul id="transactions-list" class="divide-y divide-line text-sm"></ul>
+      </section>
+    </div>
+  </main>
+
+  <footer class="border-t border-line py-12 text-xs text-muted">
+    <div class="max-w-6xl mx-auto px-6 space-y-3">
+      <p>Investing involves risk, including the possible loss of the money you invest. Past performance does not guarantee future results.</p>
+    </div>
+  </footer>
+
+  <template id="holding-row-template">
+    <tr class="flex flex-col sm:table-row py-4 sm:py-0">
+      <td class="sm:table-cell py-1 sm:py-3.5 pr-4">
+        <div data-field="name" class="font-medium text-ink"></div>
+        <div data-field="symbol" class="text-xs text-muted"></div>
+      </td>
+      <td class="flex justify-between sm:table-cell py-1 sm:py-3.5 px-0 sm:px-4 sm:text-right tabular-nums">
+        <span class="sm:hidden text-muted">Quantity</span>
+        <span data-field="quantity" class="text-ink"></span>
+      </td>
+      <td class="flex justify-between sm:table-cell py-1 sm:py-3.5 px-0 sm:px-4 sm:text-right tabular-nums">
+        <span class="sm:hidden text-muted">Value</span>
+        <span data-field="value" class="text-ink"></span>
+      </td>
+      <td class="flex justify-between sm:table-cell py-1 sm:py-3.5 pl-0 sm:pl-4 sm:text-right tabular-nums">
+        <span class="sm:hidden text-muted">Gain / Loss</span>
+        <span data-field="gain"></span>
+      </td>
+    </tr>
+  </template>
+
+  <template id="transaction-item-template">
+    <li class="py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+      <div class="space-y-1">
+        <div class="flex items-center gap-2">
+          <span data-field="type" class="font-medium text-ink"></span>
+          <span data-field="status" class="text-xs px-2 py-0.5 rounded border border-line text-muted"></span>
+        </div>
+        <span data-field="date" class="text-xs text-muted block"></span>
+      </div>
+      <div data-field="amount" class="text-ink font-medium tabular-nums sm:text-right"></div>
+    </li>
+  </template>
+
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/portfolio.js"></script>
+</body>
+</html>

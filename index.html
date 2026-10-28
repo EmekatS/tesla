@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tesla Portfolio — Tesla Prime Investment</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+  @theme {
+    --color-canvas: #0d0e10;
+    --color-surface: #16181c;
+    --color-line: #2a2d33;
+    --color-ink: #f2f3f5;
+    --color-muted: #9097a1;
+    --color-accent: #3e6ae1;
+    --color-gain: #3ddc97;
+    --color-loss: #ff5a5f;
+    --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+</style>
+  <style>
+    @keyframes heroFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .hero-fade-in {
+      animation: heroFadeIn 700ms ease-out forwards;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-fade-in {
+        animation: none;
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body class="bg-canvas text-ink font-sans antialiased min-h-screen flex flex-col">
+  <div id="sample-banner" class="bg-surface border-b border-line px-6 py-2.5 text-center text-xs text-muted">Sample data: the figures on this site are placeholders, not real holdings or funds.</div>
+
+  <header class="sticky top-0 z-40 bg-canvas/80 backdrop-blur border-b border-line">
+    <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between text-sm">
+      <a href="index.html" class="font-medium tracking-tight text-ink hover:text-white transition-colors duration-200">Tesla Prime Investment</a>
+      <nav class="flex items-center space-x-6 text-sm">
+        <a href="index.html" class="text-ink font-medium" aria-current="page">Home</a>
+        <a href="portfolio.html" class="text-muted hover:text-ink transition-colors duration-200">Portfolio</a>
+        <a href="deposit.html" class="text-muted hover:text-ink transition-colors duration-200">Deposit</a>
+        <a href="withdraw.html" class="text-muted hover:text-ink transition-colors duration-200">Withdraw</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1">
+    <section class="max-w-6xl mx-auto px-6 min-h-[calc(100vh-9rem)] flex flex-col justify-between py-16 md:py-24 hero-fade-in">
+      <div class="relative py-12 flex flex-col items-center justify-center">
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none -z-10" aria-hidden="true">
+          <div class="w-96 h-48 rounded-full bg-accent/10 blur-3xl"></div>
+        </div>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-ink text-center max-w-2xl">Tesla portfolio client area</h1>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-12 pb-6">
+        <a href="portfolio.html" class="w-full sm:w-auto inline-flex items-center justify-center h-10 px-5 text-sm font-medium rounded bg-accent text-white hover:bg-accent/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-200">View portfolio</a>
+        <a href="deposit.html" class="w-full sm:w-auto inline-flex items-center justify-center h-10 px-5 text-sm font-medium rounded border border-line text-ink hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-line transition-colors duration-200">Make a deposit</a>
+      </div>
+    </section>
+
+    <section class="py-20 md:py-32 border-t border-line">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-xl font-light tracking-tight text-ink mb-12">Account features</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-sm">
+          <div>
+            <h3 class="font-medium text-ink mb-2">See your portfolio</h3>
+            <p class="text-muted leading-relaxed">Review your Tesla stock holdings, current portfolio valuation, and complete transaction history.</p>
+          </div>
+          <div>
+            <h3 class="font-medium text-ink mb-2">Make a deposit</h3>
+            <p class="text-muted leading-relaxed">Submit funds to your investment account balance with verified settlement instructions.</p>
+          </div>
+          <div>
+            <h3 class="font-medium text-ink mb-2">Request a withdrawal</h3>
+            <p class="text-muted leading-relaxed">Request a withdrawal from your available balance directly to your designated receiving account.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-line py-12 text-xs text-muted">
+    <div class="max-w-6xl mx-auto px-6 space-y-3">
+      <p>Investing involves risk, including the possible loss of the money you invest. Past performance does not guarantee future results.</p>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+</body>
+</html>

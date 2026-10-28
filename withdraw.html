@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Withdraw — Tesla Prime Investment</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+  @theme {
+    --color-canvas: #0d0e10;
+    --color-surface: #16181c;
+    --color-line: #2a2d33;
+    --color-ink: #f2f3f5;
+    --color-muted: #9097a1;
+    --color-accent: #3e6ae1;
+    --color-gain: #3ddc97;
+    --color-loss: #ff5a5f;
+    --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+</style>
+</head>
+<body class="bg-canvas text-ink font-sans antialiased min-h-screen flex flex-col">
+  <div id="sample-banner" class="bg-surface border-b border-line px-6 py-2.5 text-center text-xs text-muted">Sample data: the figures on this site are placeholders, not real holdings or funds.</div>
+
+  <header class="sticky top-0 z-40 bg-canvas/80 backdrop-blur border-b border-line">
+    <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between text-sm">
+      <a href="index.html" class="font-medium tracking-tight text-ink hover:text-white transition-colors duration-200">Tesla Prime Investment</a>
+      <nav class="flex items-center space-x-6 text-sm">
+        <a href="index.html" class="text-muted hover:text-ink transition-colors duration-200">Home</a>
+        <a href="portfolio.html" class="text-muted hover:text-ink transition-colors duration-200">Portfolio</a>
+        <a href="deposit.html" class="text-muted hover:text-ink transition-colors duration-200">Deposit</a>
+        <a href="withdraw.html" class="text-ink font-medium" aria-current="page">Withdraw</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1 py-12 md:py-16">
+    <div class="max-w-xl mx-auto px-6">
+      <div class="mb-8">
+        <h1 class="text-3xl font-light tracking-tight text-ink mb-2">Withdraw funds</h1>
+        <p class="text-sm text-muted">Request a transfer of available funds from your account.</p>
+      </div>
+
+      <!-- Available Balance Display -->
+      <div class="mb-8 p-4 rounded border border-line bg-surface">
+        <span class="text-xs text-muted block mb-1">Available to withdraw</span>
+        <div id="available-amount" class="text-2xl font-light text-ink tabular-nums">—</div>
+        <div id="available-feedback" class="hidden text-xs text-loss mt-2" aria-live="polite"></div>
+      </div>
+
+      <!-- Step 1 & 2: Amount Entry Form -->
+      <form id="withdrawal-form" class="space-y-6" novalidate>
+        <div>
+          <label for="withdrawal-amount" class="block text-sm text-muted mb-2">Amount (<span id="withdrawal-currency-label">USD</span>)</label>
+          <input
+            id="withdrawal-amount"
+            name="amount"
+            type="text"
+            inputmode="decimal"
+            placeholder="0.00"
+            required
+            class="w-full h-10 rounded border border-line bg-surface text-ink px-3 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent tabular-nums"
+          >
+        </div>
+
+        <div id="withdrawal-error" class="hidden text-sm text-loss" aria-live="polite"></div>
+
+        <div class="flex items-center gap-4 pt-2">
+          <button
+            id="review-btn"
+            type="submit"
+            class="inline-flex items-center justify-center h-10 px-5 text-sm font-medium rounded bg-accent text-white hover:bg-accent/90 disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-200"
+          >
+            Review withdrawal
+          </button>
+          <a href="portfolio.html" class="inline-flex items-center justify-center h-10 px-5 text-sm font-medium rounded border border-line text-ink hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-line transition-colors duration-200">Cancel</a>
+        </div>
+      </form>
+
+      <!-- Step 3: Review Quote Section -->
+      <div id="withdrawal-review" class="hidden space-y-6 border border-line bg-surface rounded-lg p-6" aria-live="polite">
+        <h2 class="text-lg font-light tracking-tight text-ink border-b border-line pb-3">Review withdrawal</h2>
+
+        <div class="space-y-3 text-sm">
+          <div class="flex justify-between items-center py-1">
+            <span class="text-muted">Withdrawal amount</span>
+            <span id="review-amount" class="text-ink font-medium tabular-nums"></span>
+          </div>
+
+          <div class="flex justify-between items-center py-1 border-t border-line">
+            <span class="text-muted">Estimated fee</span>
+            <span id="review-fee" class="text-ink font-medium tabular-nums"></span>
+          </div>
+
+          <div class="flex justify-between items-center py-1 border-t border-line">
+            <span class="text-muted">Net amount you receive</span>
+            <span id="review-net" class="text-ink font-medium tabular-nums"></span>
+          </div>
+        </div>
+
+        <div id="review-message-wrap" class="hidden text-sm text-muted pt-2 border-t border-line">
+          <p id="review-message"></p>
+        </div>
+
+        <div id="review-error" class="hidden text-sm text-loss" aria-live="polite"></div>
+
+        <div class="pt-4 border-t border-line flex items-center gap-4">
+          <button
+            id="confirm-btn"
+            type="button"
+            class="inline-flex items-center justify-center h-10 px-5 text-sm font-medium rounded bg-accent text-white hover:bg-accent/90 disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-200"
+          >
+            Confirm withdrawal
+          </button>
+          <button
+            id="change-amount-btn"
+            type="button"
+            class="inline-flex items-center justify-center h-10 px-5 text-sm font-medium rounded border border-line text-ink hover:bg-canvas focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-line transition-colors duration-200"
+          >
+            Change amount
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 4: Confirmation Result Section -->
+      <div id="withdrawal-result" class="hidden space-y-6 border border-line bg-surface rounded-lg p-6" aria-live="polite">
+        <div>
+          <span class="text-xs text-muted block mb-1">Status</span>
+          <p id="result-status" class="text-base font-medium text-ink"></p>
+        </div>
+
+        <div id="result-message-wrap" class="hidden">
+          <span class="text-xs text-muted block mb-1">Message</span>
+          <p id="result-message" class="text-sm text-muted"></p>
+        </div>
+
+        <div class="pt-4 border-t border-line">
+          <a href="portfolio.html" class="inline-flex items-center justify-center h-10 px-5 text-sm font-medium rounded bg-accent text-white hover:bg-accent/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-200">Back to portfolio</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="border-t border-line py-12 text-xs text-muted">
+    <div class="max-w-6xl mx-auto px-6 space-y-3">
+      <p>Investing involves risk, including the possible loss of the money you invest. Past performance does not guarantee future results.</p>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/withdraw.js"></script>
+</body>
+</html>
