@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio — Tesla Prime Investment</title>
+  <script src="js/auth.js" data-auth-guard></script>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <style type="text/tailwindcss">
   @theme {
@@ -29,6 +30,7 @@
         <a href="portfolio.html" class="text-ink font-medium" aria-current="page">Portfolio</a>
         <a href="deposit.html" class="text-muted hover:text-ink transition-colors duration-200">Deposit</a>
         <a href="withdraw.html" class="text-muted hover:text-ink transition-colors duration-200">Withdraw</a>
+        <button type="button" data-logout class="text-muted hover:text-accent transition-colors duration-200">Log out</button>
       </nav>
 
       <button id="nav-toggle" type="button" class="sm:hidden -mr-2 inline-flex items-center justify-center h-10 w-10 rounded text-ink hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-200" aria-controls="mobile-nav" aria-expanded="false" aria-label="Open menu">
@@ -56,6 +58,7 @@
       <a href="portfolio.html" class="py-3 text-ink font-medium" aria-current="page">Portfolio</a>
       <a href="deposit.html" class="py-3 text-muted hover:text-ink transition-colors duration-200">Deposit</a>
       <a href="withdraw.html" class="py-3 text-muted hover:text-ink transition-colors duration-200">Withdraw</a>
+      <button type="button" data-logout class="py-3 text-left text-muted hover:text-accent transition-colors duration-200">Log out</button>
     </nav>
   </aside>
 

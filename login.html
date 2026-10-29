@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign in — Tesla Prime Investment</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+  @theme {
+    --color-canvas: #ffffff;
+    --color-surface: #faf7f7;
+    --color-line: #ecdfe1;
+    --color-ink: #1b1b1f;
+    --color-muted: #71717a;
+    --color-accent: #b02233;
+    --color-gain: #15803d;
+    --color-loss: #b91c1c;
+    --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+</style>
+</head>
+<body class="bg-canvas text-ink font-sans antialiased min-h-screen flex flex-col">
+  <header class="border-b border-line">
+    <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between text-sm">
+      <a href="login.html" class="font-medium tracking-tight text-ink hover:text-muted transition-colors duration-200">Tesla Prime Investment</a>
+      <span class="text-xs text-muted">Client access</span>
+    </div>
+  </header>
+
+  <main class="flex-1 flex items-center justify-center px-6 py-12">
+    <div class="w-full max-w-sm">
+      <div class="mb-8 text-center">
+        <p class="text-[11px] font-medium uppercase tracking-[0.18em] text-accent mb-3">Welcome back</p>
+        <h1 class="text-3xl font-light tracking-tight text-ink">Sign in to your account</h1>
+        <p class="mt-2 text-sm text-muted">Enter your client details to continue.</p>
+      </div>
+
+      <form id="login-form" class="space-y-5 rounded-lg border border-line bg-surface p-6 sm:p-8" novalidate>
+        <div>
+          <label for="login-name" class="block text-sm text-muted mb-2">Name</label>
+          <input
+            id="login-name"
+            name="name"
+            type="text"
+            autocomplete="username"
+            autocapitalize="words"
+            spellcheck="false"
+            placeholder="Your full name"
+            required
+            autofocus
+            class="w-full h-11 rounded border border-line bg-canvas text-ink placeholder:text-muted/60 px-3 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent focus-visible:border-accent"
+          >
+        </div>
+
+        <div>
+          <label for="login-password" class="block text-sm text-muted mb-2">Password</label>
+          <input
+            id="login-password"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            required
+            class="w-full h-11 rounded border border-line bg-canvas text-ink placeholder:text-muted/60 px-3 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent focus-visible:border-accent"
+          >
+        </div>
+
+        <div id="login-error" class="hidden text-sm text-loss" aria-live="polite"></div>
+
+        <button
+          id="login-submit"
+          type="submit"
+          class="w-full inline-flex items-center justify-center h-11 px-5 text-sm font-medium rounded bg-accent text-canvas hover:bg-accent/90 disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-200"
+        >
+          Sign in
+        </button>
+      </form>
+
+      <p class="mt-8 text-center text-xs text-muted">Authorized clients only.</p>
+    </div>
+  </main>
+
+  <footer class="border-t border-line py-6 text-center text-xs text-muted">
+    <p>Investing involves risk, including the possible loss of the money you invest.</p>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>
