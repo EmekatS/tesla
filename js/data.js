@@ -4,12 +4,14 @@
 
 const PLACEHOLDER_META = {
   isSample: true,
-  currency: 'USD'
+  currency: 'USD',
+  clientName: 'Steve Eagar'
 };
 
 const PLACEHOLDER_SUMMARY = {
   balanceCents: 2000000,
   investedCents: 1753000,
+  checkingCents: 247000,
   availableToWithdrawCents: 247000,
   asOf: '2026-10-28T08:00:00Z'
 };
@@ -17,21 +19,21 @@ const PLACEHOLDER_SUMMARY = {
 const PLACEHOLDER_HOLDINGS = [
   {
     id: 'hld-1',
-    kind: 'Stock',
-    name: 'Tesla, Inc.',
-    symbol: 'TSLA',
-    quantity: '65',
-    valueCents: 1425000,
-    gainCents: 185000
+    kind: 'Private Equity',
+    name: 'SpaceX',
+    symbol: 'SPACEX',
+    quantity: '120',
+    valueCents: 1000000,
+    gainCents: 85000
   },
   {
     id: 'hld-2',
     kind: 'Stock',
-    name: 'Tesla, Inc. (DSPP)',
+    name: 'Tesla Energy',
     symbol: 'TSLA',
-    quantity: '15',
-    valueCents: 328000,
-    gainCents: -24500
+    quantity: '80',
+    valueCents: 753000,
+    gainCents: -12000
   }
 ];
 

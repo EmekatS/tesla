@@ -89,23 +89,74 @@ function renderEmpty(container, message) {
   container.appendChild(wrap);
 }
 
-function initSampleBanner() {
-  if (typeof DataLayer !== 'undefined' && typeof DataLayer.getMeta === 'function') {
-    DataLayer.getMeta().then((meta) => {
-      if (meta && meta.isSample === false) {
-        const banner = document.getElementById('sample-banner');
-        if (banner) {
-          banner.remove();
-        }
+function initNav() {
+  const toggle = document.getElementById('nav-toggle');
+  const overlay = document.getElementById('mobile-nav-overlay');
+  const drawer = document.getElementById('mobile-nav');
+  if (!toggle || !overlay || !drawer) {
+    return;
+  }
+
+  const closeBtn = document.getElementById('nav-close');
+  let isOpen = false;
+
+  function setOpen(nextOpen, restoreFocus) {
+    isOpen = nextOpen;
+
+    toggle.setAttribute('aria-expanded', String(isOpen));
+    drawer.setAttribute('aria-hidden', String(!isOpen));
+    drawer.inert = !isOpen;
+    document.body.classList.toggle('overflow-hidden', isOpen);
+
+    overlay.classList.toggle('opacity-0', !isOpen);
+    overlay.classList.toggle('pointer-events-none', !isOpen);
+    drawer.classList.toggle('translate-x-full', !isOpen);
+
+    if (isOpen) {
+      if (closeBtn) {
+        closeBtn.focus({ preventScroll: true });
       }
-    }).catch(() => {
-      // Leave banner visible on error
+    } else if (restoreFocus !== false) {
+      toggle.focus({ preventScroll: true });
+    }
+  }
+
+  toggle.addEventListener('click', () => {
+    setOpen(true);
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      setOpen(false);
     });
   }
+
+  overlay.addEventListener('click', () => {
+    setOpen(false);
+  });
+
+  drawer.addEventListener('click', (event) => {
+    if (event.target.closest('a')) {
+      setOpen(false);
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && isOpen) {
+      setOpen(false);
+    }
+  });
+
+  window.matchMedia('(min-width: 640px)').addEventListener('change', (event) => {
+    if (event.matches && isOpen) {
+      setOpen(false, false);
+    }
+  });
 }
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initSampleBanner);
+  document.addEventListener('DOMContentLoaded', initNav);
 } else {
-  initSampleBanner();
+  initNav();
 }
+

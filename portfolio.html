@@ -7,32 +7,57 @@
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <style type="text/tailwindcss">
   @theme {
-    --color-canvas: #0d0e10;
-    --color-surface: #16181c;
-    --color-line: #2a2d33;
-    --color-ink: #f2f3f5;
-    --color-muted: #9097a1;
-    --color-accent: #3e6ae1;
-    --color-gain: #3ddc97;
-    --color-loss: #ff5a5f;
+    --color-canvas: #ffffff;
+    --color-surface: #faf7f7;
+    --color-line: #ecdfe1;
+    --color-ink: #1b1b1f;
+    --color-muted: #71717a;
+    --color-accent: #b02233;
+    --color-gain: #15803d;
+    --color-loss: #b91c1c;
     --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
 </style>
 </head>
 <body class="bg-canvas text-ink font-sans antialiased min-h-screen flex flex-col">
-  <div id="sample-banner" class="bg-surface border-b border-line px-6 py-2.5 text-center text-xs text-muted">Sample data: the figures on this site are placeholders, not real holdings or funds.</div>
-
   <header class="sticky top-0 z-40 bg-canvas/80 backdrop-blur border-b border-line">
-    <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between text-sm">
-      <a href="index.html" class="font-medium tracking-tight text-ink hover:text-white transition-colors duration-200">Tesla Prime Investment</a>
-      <nav class="flex items-center space-x-6 text-sm">
+    <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between gap-4 text-sm">
+      <a href="index.html" class="min-w-0 truncate font-medium tracking-tight text-ink hover:text-muted transition-colors duration-200">Tesla Prime Investment</a>
+
+      <nav class="hidden sm:flex items-center space-x-6 text-sm" aria-label="Primary">
         <a href="index.html" class="text-muted hover:text-ink transition-colors duration-200">Home</a>
         <a href="portfolio.html" class="text-ink font-medium" aria-current="page">Portfolio</a>
         <a href="deposit.html" class="text-muted hover:text-ink transition-colors duration-200">Deposit</a>
         <a href="withdraw.html" class="text-muted hover:text-ink transition-colors duration-200">Withdraw</a>
       </nav>
+
+      <button id="nav-toggle" type="button" class="sm:hidden -mr-2 inline-flex items-center justify-center h-10 w-10 rounded text-ink hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-200" aria-controls="mobile-nav" aria-expanded="false" aria-label="Open menu">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+          <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+      </button>
     </div>
   </header>
+
+  <div id="mobile-nav-overlay" class="sm:hidden fixed inset-0 z-40 bg-ink/30 backdrop-blur-[2px] opacity-0 pointer-events-none transition-opacity duration-300 ease-out" aria-hidden="true"></div>
+
+  <aside id="mobile-nav" class="sm:hidden fixed inset-y-0 right-0 z-50 w-80 max-w-[85vw] bg-canvas border-l border-line shadow-2xl translate-x-full transition-transform duration-300 ease-out will-change-transform" aria-label="Mobile navigation" aria-hidden="true" inert>
+    <div class="flex items-center justify-between h-14 px-6 border-b border-line">
+      <span class="text-sm font-medium tracking-tight text-ink">Menu</span>
+      <button id="nav-close" type="button" class="-mr-2 inline-flex items-center justify-center h-10 w-10 rounded text-ink hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-200" aria-label="Close menu">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+          <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+    </div>
+
+    <nav class="px-6 py-2 flex flex-col text-sm divide-y divide-line" aria-label="Mobile">
+      <a href="index.html" class="py-3 text-muted hover:text-ink transition-colors duration-200">Home</a>
+      <a href="portfolio.html" class="py-3 text-ink font-medium" aria-current="page">Portfolio</a>
+      <a href="deposit.html" class="py-3 text-muted hover:text-ink transition-colors duration-200">Deposit</a>
+      <a href="withdraw.html" class="py-3 text-muted hover:text-ink transition-colors duration-200">Withdraw</a>
+    </nav>
+  </aside>
 
   <main class="flex-1 py-12 md:py-16">
     <div class="max-w-6xl mx-auto px-6 space-y-16">
@@ -62,7 +87,7 @@
             </div>
 
             <div class="flex items-center gap-4">
-              <a href="deposit.html" class="inline-flex items-center justify-center h-10 px-5 text-sm font-medium rounded bg-accent text-white hover:bg-accent/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-200">Deposit</a>
+              <a href="deposit.html" class="inline-flex items-center justify-center h-10 px-5 text-sm font-medium rounded bg-accent text-canvas hover:bg-accent/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors duration-200">Deposit</a>
               <a href="withdraw.html" class="inline-flex items-center justify-center h-10 px-5 text-sm font-medium rounded border border-line text-ink hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-line transition-colors duration-200">Withdraw</a>
             </div>
           </div>
